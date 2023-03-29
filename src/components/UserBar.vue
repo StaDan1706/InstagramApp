@@ -4,6 +4,7 @@ import UploadPhotoModalVue from './UploadPhotoModal.vue';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../stores/users';
 import { storeToRefs } from 'pinia';
+import { supabase } from '../supabase';
 
 const route = useRoute();
 const userStore = useUserStore()
@@ -11,7 +12,20 @@ const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 const { username: profileUsername } = route.params
 
-const props = defineProps(['user', 'userInfo', 'addNewPost'])
+const props = defineProps(['user', 'userInfo', 'addNewPost', 'isFollowing', 'updateIsFollowing'])
+
+const followUser = async () => {
+    props.updateIsFollowing(true)
+    await supabase.from("followers_following").insert({
+        follower_id: user.value.id,
+        following_id: props.user.id
+    })
+}
+
+const unfollowUser = async () => {
+    props.updateIsFollowing(false)
+    await supabase.from("followers_following").delete().eq("follower_id", user.value.id).eq("following_id", props.user.id)
+}
 </script>
 
 <template>
@@ -20,7 +34,10 @@ const props = defineProps(['user', 'userInfo', 'addNewPost'])
             <ATypographyTitle :level="2">{{ props.user.username }}</ATypographyTitle>
             <div v-if="user">
                 <UploadPhotoModalVue :addNewPost="addNewPost" v-if="profileUsername === user.username" />
-                <AButton v-else>Follow</AButton>
+                <div v-else>
+                    <AButton v-if="!props.isFollowing" @click="followUser">Follow</AButton>
+                    <AButton v-else @click="unfollowUser">Following</AButton>
+                </div>
             </div>
         </div>
 

@@ -1,22 +1,28 @@
 <script setup>
 import AppCard from './AppCard.vue';
 import AppContainer from './AppContainer.vue';
+import { useUserStore } from '../stores/users';
+import { storeToRefs } from 'pinia';
+
+const userStore = useUserStore()
+const { user, loadingUser } = storeToRefs(userStore)
+
 
 const data = [
     {
-        id:1,
+        id: 1,
         username: "xyz",
         url: "https://pbs.twimg.com/media/FjOt_wHaUAEF751?format=jpg&name=large",
         caption: "C1e"
     },
     {
-        id:2,
+        id: 2,
         username: "2zzxyz",
         url: "https://cdn.galleries.smcloud.net/t/galleries/gf-xHzw-BYgC-YQ6J_sergiusz-nitrozyniak-gorski-przed-fame-mma-13-1280x960.jpg",
         caption: "C2e"
     },
     {
-        id:3,
+        id: 3,
         username: "3xyz",
         url: "data:image/jpeg;base64,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",
         caption: "C3e"
@@ -26,13 +32,28 @@ const data = [
 
 <template>
     <AppContainer>
-        <div class="timeline-container">
-            <AppCard v-for="post in data" :key="post.id" :post="post" />
+        <div v-if="!loadingUser">
+            <div v-if="user" class="timeline-container">
+                <AppCard v-for="post in data" :key="post.id" :post="post" />
+            </div>
+            <div v-else class="timeline-container">
+                <h3>Log in to see posts</h3>
+            </div>
+        </div>
+        <div v-else class="spinner">
+            <ASpin />
         </div>
     </AppContainer>
 </template>
 
 <style scoped>
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
 .timeline-container {
     display: flex;
     flex-direction: column;

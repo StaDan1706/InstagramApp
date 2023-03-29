@@ -4,6 +4,6 @@ import AppProfile from "../components/AppProfile.vue"
 
 <template>
     <main>
-        <AppProfile/>
+        <AppProfile :key="$route.params.username"/>
     </main>
 </template>
