@@ -18,6 +18,10 @@ const onSearch = () => {
         searchUsername.value = ''
     }
 }
+
+const handleLogout = async () => {
+    await userStore.handleLogout()
+}
 </script>
 <template>
     <ALayoutHeader>
@@ -35,7 +39,7 @@ const onSearch = () => {
                     </div>
                     <div class="left-content" v-else>
                         <AButton type="primary">Profile</AButton>
-                        <AButton type="primary">Logout</AButton>
+                        <AButton type="primary" @click="handleLogout">Logout</AButton>
                     </div>
                 </div>
             </div>
@@ -44,11 +48,11 @@ const onSearch = () => {
 </template>
 
 <style scoped>
-
 .content {
     display: flex;
     align-items: center;
 }
+
 .nav-container {
     display: flex;
     justify-content: space-between;
