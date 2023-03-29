@@ -26,13 +26,11 @@ const handleOk = async (e) => {
     let filePath
     if (file.value) {
         const { data, error } = await supabase.storage.from("images").upload('public/' + fileName, file.value)
-
+        filePath = data.path
         if (error) {
             loading.value = false
             return errorMessage.value = "Unable to upload image"
         }
-
-        filePath = data.path
         await supabase.from("posts").insert({
             url: filePath,
             caption: caption.value,

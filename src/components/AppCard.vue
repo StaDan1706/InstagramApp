@@ -7,7 +7,7 @@ const props = defineProps(['post'])
 <template>
     <ACard hoverable style="width: 240px" class="card">
         <template #cover>
-            <img alt="example" :src="post.url" />
+            <img alt="example" :src="`https://fsciiobemmrejkltmovi.supabase.co/storage/v1/object/public/images/${post.url}`" />
         </template>
         <ACardMeta :title="post.username">
             <template #description>{{ post.caption }}</template>
