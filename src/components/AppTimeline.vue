@@ -14,7 +14,7 @@ const { user, loadingUser } = storeToRefs(userStore)
     <AppContainer>
         <div v-if="!loadingUser">
             <AppCards v-if="user" />
-            <AppLogInMessage v-else/>
+            <AppLogInMessage v-else />
         </div>
         <div v-else class="spinner">
             <ASpin />
